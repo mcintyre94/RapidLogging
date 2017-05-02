@@ -1,0 +1,59 @@
+<head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.1/css/bulma.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+
+  .task-done{
+    text-decoration: line-through;
+  }
+
+  .middle-icon{
+    vertical-align: middle;
+  }
+
+  .task-done-wrap{
+    color:lightgray;
+  }
+
+</style>
+
+</head>
+
+<body>
+<div class="column is-half is-offset-one-quarter">
+<div id="logentry">
+  <p class="control has-icons-left">
+    <input class="input" :class="{'is-warning' : priority, 'is-info' : !priority}" type="text" placeholder="Log anything..." v-model="logged" @keyup="updateIcon" @keyup.enter="add">
+    <span class="icon is-small is-left">
+      <i class="fa" :class="icon"></i>
+    </span>
+    <span class="icon is-small is-left">
+      <i class="fa" :class="icon"></i>
+    </span>
+  </p>
+  <p class="help"> {{ type }}</p>
+</div>
+
+<div id="loglist">
+  <ul>
+    <li v-for="row in sortedLogs">
+      <span :class="{'task-done-wrap' : row.done}">
+        <span @click="togglePriority(row)"><i class="fa middle-icon" :class="{'fa-star' : row.isPriority, 'fa-star-o' : !row.isPriority}" style="color: #cc0"></i></span>
+          <i class="fa middle-icon" :class="row.icon"></i>
+          <span style="padding-left:10px" :class = "{'task-done' : row.done}">{{ row.value }}</span>
+          <span @click="toggleDone(row)"><i class="fa fa-check middle-icon"></i></span>
+          <span @click="deleteTask(row)"><i class="fa fa-trash-o middle-icon"></i></span>
+      </span>
+    </li>
+  </ul>
+</div>
+
+</div>
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="main.js"></script>
+
+</body>
